@@ -1,0 +1,49 @@
+
+trigger:
+- master
+
+name: terraform
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - src/terraform/*
+      - src/pipelines/*
+      
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+  service_connection: '$(service_connection)'
+- name: skipComponentGovernanceDetection
+  value: true
+  
+stages:
+- stage: DeployInfra
+  displayName: Deploy Infra
+  jobs:  
+  - job: DeployInfra
+    displayName: Deploy Infra
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
+      displayName: "Use Terraform $(terraformVersion)"
+    - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+      displayName: "terraform init"
+      inputs:
+        command: init
+        commandOptions: "-backend=true -backend-config=../terraform/backend.tf"
+        backendType: azurerm
+        backendServiceArm: $(service_connection)
+        ensureBackend: true
+        backendAzureRmResourceGroupLocation: $(location)
+        backendAzureRmResourceGroupName: $(backendStorageResourceGroupName)
+        backendAzureRmStorageAccountName: $(backendStorageAccountName)
+        backendAzureRmStorageAccountSku: $(backendStorageAccountSKU)
+        backendAzureRmContainerName: $(backendContainerName)
+        backendAzureRmKey: 'tfstae-$(tag)'
+        workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
