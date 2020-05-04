@@ -1,0 +1,13 @@
+.DS_Store
+./*.DS_Store
+./*.tfvars
+terraform.tfplan
+terraform.tfstate
+./*.tfvars
+./*.tfstate
+.terraform/
+*.log
+*.bak
+*~
+.*.swp
+
