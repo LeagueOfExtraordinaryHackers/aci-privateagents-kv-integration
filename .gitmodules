@@ -7,3 +7,6 @@
 [submodule "src/scripts/tests/test/libs/bats-support"]
 	path = src/scripts/tests/test/libs/bats-support
 	url = https://github.com/ztombol/bats-support
+[submodule "src/scripts/test/helpers/mocks"]
+	path = src/scripts/test/helpers/mocks
+	url = https://github.com/jasonkarns/bats-mock
