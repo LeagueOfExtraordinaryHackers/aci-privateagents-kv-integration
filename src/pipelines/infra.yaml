@@ -13,9 +13,10 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
+  - group: TFBackend
   service_connection: '$(service_connection)'
-- name: skipComponentGovernanceDetection
-  value: true
+  - name: skipComponentGovernanceDetection
+    value: true
   
 stages:
 - stage: DeployInfra
@@ -38,8 +39,8 @@ stages:
         ensureBackend: true
         backendAzureRmResourceGroupLocation: $(location)
         backendAzureRmResourceGroupName: $(backendStorageResourceGroupName)
-        backendAzureRmStorageAccountName: $(backendStorageAccountName)
+        backendAzureRmStorageAccountName: $(backendStorageAccountName)-$(tag)
         backendAzureRmStorageAccountSku: $(backendStorageAccountSKU)
         backendAzureRmContainerName: $(backendContainerName)
-        backendAzureRmKey: 'tfstae-$(tag)'
+        backendAzureRmKey: 'tfstate-$(tag)'
         workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
