@@ -14,8 +14,6 @@ resources:
 variables:
   - name: tag
     value: "$(Build.BuildId)"
-  - name: service_connection
-    value: "$(service_connection)"
   - group: TFBackend
   - name: skipComponentGovernanceDetection
     value: true
