@@ -39,7 +39,7 @@ stages:
               ensureBackend: true
               backendAzureRmResourceGroupLocation: $(location)
               backendAzureRmResourceGroupName: $(backendStorageResourceGroupName)
-              backendAzureRmStorageAccountName: $(backendStorageAccountName)-$(tag)
+              backendAzureRmStorageAccountName: $(backendStorageAccountName)
               backendAzureRmStorageAccountSku: $(backendStorageAccountSKU)
               backendAzureRmContainerName: $(backendContainerName)
               backendAzureRmKey: "tfstate-$(tag)"
