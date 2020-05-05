@@ -7,40 +7,42 @@ trigger:
     include:
       - src/terraform/*
       - src/pipelines/*
-      
+
 resources:
-- repo: self
+  - repo: self
 
 variables:
-  tag: '$(Build.BuildId)'
+  - name: tag
+    value: "$(Build.BuildId)"
+  - name: service_connection
+    value: "$(service_connection)"
   - group: TFBackend
-  service_connection: '$(service_connection)'
   - name: skipComponentGovernanceDetection
     value: true
-  
+
 stages:
-- stage: DeployInfra
-  displayName: Deploy Infra
-  jobs:  
-  - job: DeployInfra
+  - stage: DeployInfra
     displayName: Deploy Infra
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-    - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
-      displayName: "Use Terraform $(terraformVersion)"
-    - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
-      displayName: "terraform init"
-      inputs:
-        command: init
-        commandOptions: "-backend=true -backend-config=../terraform/backend.tf"
-        backendType: azurerm
-        backendServiceArm: $(service_connection)
-        ensureBackend: true
-        backendAzureRmResourceGroupLocation: $(location)
-        backendAzureRmResourceGroupName: $(backendStorageResourceGroupName)
-        backendAzureRmStorageAccountName: $(backendStorageAccountName)-$(tag)
-        backendAzureRmStorageAccountSku: $(backendStorageAccountSKU)
-        backendAzureRmContainerName: $(backendContainerName)
-        backendAzureRmKey: 'tfstate-$(tag)'
-        workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
+    jobs:
+      - job: DeployInfra
+        displayName: Deploy Infra
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
+            displayName: "Use Terraform $(terraformVersion)"
+          - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+            displayName: "terraform init"
+            inputs:
+              command: init
+              commandOptions: "-backend=true -backend-config=../terraform/backend.tf"
+              backendType: azurerm
+              backendServiceArm: $(service_connection)
+              ensureBackend: true
+              backendAzureRmResourceGroupLocation: $(location)
+              backendAzureRmResourceGroupName: $(backendStorageResourceGroupName)
+              backendAzureRmStorageAccountName: $(backendStorageAccountName)-$(tag)
+              backendAzureRmStorageAccountSku: $(backendStorageAccountSKU)
+              backendAzureRmContainerName: $(backendContainerName)
+              backendAzureRmKey: "tfstate-$(tag)"
+              workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
