@@ -1,0 +1,9 @@
+[submodule "src/scripts/tests/test/libs/bats"]
+	path = src/scripts/tests/test/libs/bats
+	url = https://github.com/sstephenson/bats
+[submodule "src/scripts/tests/test/libs/bats-assert"]
+	path = src/scripts/tests/test/libs/bats-assert
+	url = https://github.com/ztombol/bats-assert
+[submodule "src/scripts/tests/test/libs/bats-support"]
+	path = src/scripts/tests/test/libs/bats-support
+	url = https://github.com/ztombol/bats-support
