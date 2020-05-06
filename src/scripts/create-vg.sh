@@ -17,7 +17,7 @@ IFS=$'\t\n' # Split on newlines and tabs (but not on spaces)
 
 # Global vars
 ORG="https://dev.azure.com/cavertes"
-PROJECT="VW Sharing"
+PROJECT="VW_Sharing"
 VG_NAME="TFBackend"
 
 # Query the variable group used
@@ -26,7 +26,7 @@ vg_id() {
 }
 # Delete a variable group used by $VG_NAME
 delete_vg() {
-    az pipelines variable-group delete --organization "${ORG}" --project "${PROJECT}" --id "$(vg_id) "--yes
+    az pipelines variable-group delete --organization "${ORG}" --project "${PROJECT}" --id "$(vg_id)" -y
 }
 # Create a variable group used by $VG_NAME
 create_vg() {
