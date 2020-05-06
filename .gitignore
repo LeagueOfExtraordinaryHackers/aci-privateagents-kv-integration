@@ -13,3 +13,4 @@ terraform.tfstate.backup
 .*.swp
 .*.svg
 .*.png
+src/terraform/graph.svg

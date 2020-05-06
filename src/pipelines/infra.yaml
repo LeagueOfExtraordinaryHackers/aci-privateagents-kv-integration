@@ -31,17 +31,6 @@ stages:
         pool:
           vmImage: "ubuntu-latest"
         steps:
-          - task: AzureCLI@2
-            displayName: Azure CLI
-            inputs:
-              azureSubscription: azuresc-alvozza
-              scriptType: bash
-              scriptLocation: inlineScript
-              addSpnToEnvironment: true
-              workingDirectory: "$(System.DefaultWorkingDirectory)/src/scripts"
-              inlineScript: |
-                az devops login --org "https://dev.azure.com/cavertes"
-                ./create_vg.sh
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
             displayName: "Use Terraform $(terraformVersion)"
             inputs:
