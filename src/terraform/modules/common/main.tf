@@ -18,6 +18,9 @@ resource "azurerm_subnet" "subnet" {
 
   address_prefixes = ["10.0.1.0/24"]
 
+  service_endpoints = [
+    "Microsoft.KeyVault"
+  ]
 }
 
 #create a managed identity to access KV
@@ -39,7 +42,7 @@ resource "azurerm_key_vault" "keyvault" {
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   sku_name                    = "standard"
 
-#only access KV from within azure and the subnet created above
+  #only access KV from within azure and the subnet created above
   network_acls {
     default_action             = "Deny"
     bypass                     = "AzureServices"
