@@ -21,8 +21,6 @@ variables:
     value: "ubuntu-latest"
   - name: terraformVersion
     value: 0.12.24
-  - name: service_connection
-    value: $(service_connection)
 
 stages:
   - stage: DeployInfra
@@ -36,7 +34,7 @@ stages:
           - task: AzureCLI@2
             displayName: Azure CLI
             inputs:
-              azureSubscription: $(service_connection)
+              azureSubscription: azuresc-alvozza
               scriptType: bash
               scriptLocation: inlineScript
               workingDirectory: "$(System.DefaultWorkingDirectory)/src/scripts"
