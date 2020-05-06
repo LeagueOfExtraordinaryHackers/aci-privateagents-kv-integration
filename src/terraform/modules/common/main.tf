@@ -43,7 +43,7 @@ resource "azurerm_key_vault" "keyvault" {
   sku_name                    = "standard"
 
   #only access KV from within azure and the subnet created above
-/*   network_acls {
+  /*   network_acls {
     default_action             = "Deny"
     bypass                     = "AzureServices"
     virtual_network_subnet_ids = [azurerm_subnet.subnet.id]
@@ -84,7 +84,7 @@ resource "tls_private_key" "ssh" {
 resource "azurerm_key_vault_secret" "sshkey" {
   name         = "sshkey"
   value        = tls_private_key.ssh.private_key_pem
-  key_vault_id = azurerm_key_vault.keyvault.client_id
+  key_vault_id = azurerm_key_vault.keyvault.id
 
   depends_on = [
     azurerm_key_vault_access_policy.current
@@ -121,7 +121,7 @@ resource "azurerm_key_vault_access_policy" "mi" {
   key_vault_id = azurerm_key_vault.keyvault.id
 
   tenant_id = data.azurerm_client_config.current.tenant_id
-  object_id = azurerm_user_assigned_identity.mi.id
+  object_id = azurerm_user_assigned_identity.mi.client_id
 
   key_permissions = [
   ]
