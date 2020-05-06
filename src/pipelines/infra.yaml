@@ -41,7 +41,7 @@ stages:
               workingDirectory: "$(System.DefaultWorkingDirectory)/src/scripts"
               inlineScript: |
                 az devops login --org "https://dev.azure.com/cavertes"
-                ./create-vg.sh
+                ./create_vg.sh
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
             displayName: "Use Terraform $(terraformVersion)"
             inputs:
