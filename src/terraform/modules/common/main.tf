@@ -43,11 +43,11 @@ resource "azurerm_key_vault" "keyvault" {
   sku_name                    = "standard"
 
   #only access KV from within azure and the subnet created above
-  network_acls {
+/*   network_acls {
     default_action             = "Deny"
     bypass                     = "AzureServices"
     virtual_network_subnet_ids = [azurerm_subnet.subnet.id]
-  }
+  } */
 }
 
 #let the current SP (the one TF is runnin on) set secrets
