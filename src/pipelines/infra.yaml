@@ -48,7 +48,7 @@ stages:
               backendAzureRmStorageAccountName: $(backendStorageAccountName)
               backendAzureRmStorageAccountSku: $(backendStorageAccountSKU)
               backendAzureRmContainerName: $(backendContainerName)
-              backendAzureRmKey: "tfstate-$(tag)"
+              backendAzureRmKey: "$(Build.DefinitionName)/tfstate-$(tag)"
               workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
             displayName: "terraform validate"
