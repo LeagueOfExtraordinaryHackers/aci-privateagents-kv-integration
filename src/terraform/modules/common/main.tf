@@ -92,7 +92,7 @@ resource "azurerm_key_vault_secret" "sshkey" {
 }
 
 #remove permissions to current SP
-
+/* 
 resource "azurerm_key_vault_access_policy" "remove_current" {
   key_vault_id = azurerm_key_vault.keyvault.id
 
@@ -114,7 +114,7 @@ resource "azurerm_key_vault_access_policy" "remove_current" {
   depends_on = [
     azurerm_key_vault_access_policy.current,
   ]
-}
+} */
 
 #add secret read access to the MI
 resource "azurerm_key_vault_access_policy" "mi" {
