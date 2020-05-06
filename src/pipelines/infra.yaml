@@ -1,4 +1,4 @@
-name: terraform
+name: aci-privateagents-kv-integration
 trigger:
   branches:
     include:
@@ -17,6 +17,8 @@ variables:
   - group: TFBackend
   - name: skipComponentGovernanceDetection
     value: true
+  - name: vmImageName
+    value: "ubuntu-latest"
 
 stages:
   - stage: DeployInfra
@@ -44,3 +46,14 @@ stages:
               backendAzureRmContainerName: $(backendContainerName)
               backendAzureRmKey: "tfstate-$(tag)"
               workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
+          - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+            displayName: "terraform validate"
+            inputs:
+              workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
+          - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+            displayName: "terraform plan"
+            inputs:
+              command: plan
+              environmentServiceName: $(serviceConnection)
+              workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
+              commandOptions: "-var resource_group_name=$(Build.DefinitionName) -var suffix=$(tag)"

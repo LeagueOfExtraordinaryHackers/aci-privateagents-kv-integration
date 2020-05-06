@@ -1,6 +1,8 @@
-resource "random_string" "suffix" {
-  length  = 8
-  special = false
+module "common" {
+  source              = "./modules/common"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  suffix              = random_string.suffix.result
 }
 
 module "aci-devops-agents" {
