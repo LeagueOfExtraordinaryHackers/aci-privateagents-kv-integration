@@ -11,4 +11,5 @@ terraform.tfstate.backup
 *.bak
 *~
 .*.swp
-
+.*.svg
+.*.png
