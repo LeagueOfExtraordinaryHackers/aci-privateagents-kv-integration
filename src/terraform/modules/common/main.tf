@@ -64,8 +64,7 @@ resource "azurerm_key_vault_access_policy" "current" {
   secret_permissions = [
     "get",
     "list",
-    "create",
-    "update"
+    "set"
   ]
 
   storage_permissions = [
