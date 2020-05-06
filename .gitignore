@@ -3,6 +3,7 @@
 ./*.tfvars
 terraform.tfplan
 terraform.tfstate
+terraform.tfstate.backup
 ./*.tfvars
 ./*.tfstate
 .terraform/
@@ -10,4 +11,5 @@ terraform.tfstate
 *.bak
 *~
 .*.swp
-
+.*.svg
+.*.png

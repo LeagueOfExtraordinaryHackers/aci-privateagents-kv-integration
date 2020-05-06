@@ -1,4 +1,4 @@
-name: terraform
+name: aci-privateagents-kv-integration
 trigger:
   branches:
     include:
@@ -17,6 +17,10 @@ variables:
   - group: TFBackend
   - name: skipComponentGovernanceDetection
     value: true
+  - name: vmImageName
+    value: "ubuntu-latest"
+  - name: terraformVersion
+    value: 0.12.24
 
 stages:
   - stage: DeployInfra
@@ -27,13 +31,26 @@ stages:
         pool:
           vmImage: "ubuntu-latest"
         steps:
+          - task: AzureCLI@2
+            displayName: Azure CLI
+            inputs:
+              azureSubscription: azuresc-alvozza
+              scriptType: bash
+              scriptLocation: inlineScript
+              addSpnToEnvironment: true
+              workingDirectory: "$(System.DefaultWorkingDirectory)/src/scripts"
+              inlineScript: |
+                az devops login --org "https://dev.azure.com/cavertes"
+                ./create-vg.sh
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
             displayName: "Use Terraform $(terraformVersion)"
+            inputs:
+              terraformVersion: $(terraformVersion)
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
             displayName: "terraform init"
             inputs:
               command: init
-              commandOptions: "-backend=true -backend-config=../terraform/backend.tf"
+              commandOptions: "-backend=true -backend-config=backend.tf"
               backendType: azurerm
               backendServiceArm: $(service_connection)
               ensureBackend: true
@@ -42,5 +59,30 @@ stages:
               backendAzureRmStorageAccountName: $(backendStorageAccountName)
               backendAzureRmStorageAccountSku: $(backendStorageAccountSKU)
               backendAzureRmContainerName: $(backendContainerName)
-              backendAzureRmKey: "tfstate-$(tag)"
+              backendAzureRmKey: "$(Build.DefinitionName)/tfstate-$(tag)"
               workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
+          - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+            displayName: "terraform validate"
+            inputs:
+              workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
+          - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+            displayName: "terraform plan"
+            inputs:
+              command: plan
+              environmentServiceName: $(service_connection)
+              workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
+              commandOptions: "-var resource_group_name=$(Build.DefinitionName) -var suffix=$(tag)"
+          - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+            displayName: "terraform apply"
+            inputs:
+              command: apply
+              environmentServiceName: $(service_connection)
+              workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
+              commandOptions: "-var resource_group_name=$(Build.DefinitionName) -var suffix=$(tag)"
+          - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+            displayName: "terraform apply"
+            inputs:
+              command: destroy
+              environmentServiceName: $(service_connection)
+              workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
+              commandOptions: "-var resource_group_name=$(Build.DefinitionName) -var suffix=$(tag) -target azurerm_key_vault_access_policy.current"
