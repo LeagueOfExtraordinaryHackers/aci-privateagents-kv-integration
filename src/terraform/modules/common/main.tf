@@ -60,3 +60,8 @@ resource "azurerm_key_vault" "key_vault" {
     ]
   }
 }
+
+resource "tls_private_key" "ssh" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
