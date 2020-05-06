@@ -3,6 +3,7 @@ resource azurerm_resource_group "rg" {
   location = var.location
 }
 
+#network stuff
 resource "azurerm_virtual_network" "vnet" {
   name                = "vnet-${var.suffix}"
   location            = azurerm_resource_group.rg.location
@@ -19,6 +20,7 @@ resource "azurerm_subnet" "subnet" {
 
 }
 
+#create a managed identity to access KV
 resource "azurerm_user_assigned_identity" "mi" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
@@ -37,6 +39,7 @@ resource "azurerm_key_vault" "keyvault" {
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   sku_name                    = "standard"
 
+#only access KV from within azure and the subnet created above
   network_acls {
     default_action             = "Deny"
     bypass                     = "AzureServices"
@@ -44,6 +47,7 @@ resource "azurerm_key_vault" "keyvault" {
   }
 }
 
+#let the current SP (the one TF is runnin on) set secrets
 resource "azurerm_key_vault_access_policy" "current" {
   # authorize the current principal to access the keyvault secrets, keys and storage
   key_vault_id = azurerm_key_vault.keyvault.id
@@ -109,6 +113,7 @@ resource "azurerm_key_vault_access_policy" "remove_current" {
   ]
 }
 
+#add secret read access to the MI
 resource "azurerm_key_vault_access_policy" "mi" {
   key_vault_id = azurerm_key_vault.keyvault.id
 
