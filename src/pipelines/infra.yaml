@@ -31,6 +31,16 @@ stages:
         pool:
           vmImage: "ubuntu-latest"
         steps:
+        - task: AzureCLI@2
+          displayName: Azure CLI
+          inputs:
+            azureSubscription: <Name of the Azure Resource Manager service connection>
+            scriptType: bash
+            scriptLocation: inlineScript
+            workingDirectory: "$(System.DefaultWorkingDirectory)/src/scripts"
+            inlineScript: |
+              az extension add -n azure-devops
+              ./create-vg.sh
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
             displayName: "Use Terraform $(terraformVersion)"
             inputs:
