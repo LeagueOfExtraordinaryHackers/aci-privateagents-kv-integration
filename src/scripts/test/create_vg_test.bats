@@ -5,12 +5,6 @@ load 'libs/bats-assert/load'
 
 profile_script="./create_vg.sh"
 
-@test "test commandline agrument are accepted" { 
-    declare -a ARGV=("https://dev.azure.com/testarg1" "testarg2")
-    source ${profile_script}
-    run echo $ORG
-    assert_output "https://dev.azure.com/testarg1"
-}
 
 @test "test global ORG var is set" {
       source ${profile_script}
@@ -32,7 +26,7 @@ profile_script="./create_vg.sh"
 
 @test "test vg_id() should successfull return a number" {
     source ${profile_script}
-    run vg_id
+    run get_vg_id
     assert_success
     assert_output --regexp "^[0-9]+([.][0-9]+)?$"
 }
