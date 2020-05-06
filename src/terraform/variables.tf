@@ -7,3 +7,8 @@ variable location {
   default     = "westeurope"
   description = "The Azure location to use for deployment"
 }
+
+variable suffix {
+  type        = string
+  description = "a changing suffix for distinguishing runs"
+}

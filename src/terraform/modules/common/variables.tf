@@ -10,5 +10,5 @@ variable location {
 
 variable suffix {
   type        = string
-  description = "a random suffix"
+  description = "a changing suffix for distinguishing runs"
 }
