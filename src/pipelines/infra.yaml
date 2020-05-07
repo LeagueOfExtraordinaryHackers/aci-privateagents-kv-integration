@@ -73,15 +73,17 @@ stages:
               KEYVAULTID=`tf output keyvaultid`
               echo "##vso[task.setvariable variable=KEYVAULTID]$KEYVAULTID"              
               echo "##vso[task.setvariable variable=ACCESSPOLICYID]$ACCESSPOLICYID"
-            displayName: "terraform import"
+            displayName: "terraform output"
             workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
-            displayName: "terraform init"
+            displayName: "terraform init delete access policy"
             inputs:
               command: init
               workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform/delete_access_policy"
           - bash: |
               terraform import -var key_vault_id=$KEYVAULTID azurerm_key_vault_access_policy.current $ACCESSPOLICYID
+            workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
+            displayName: "Terraform import"
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
             displayName: "terraform plan"
             inputs:
@@ -90,7 +92,7 @@ stages:
               workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
               commandOptions: "-var key_vault_id=$KEYVAULTID"
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
-            displayName: "terraform apply"
+            displayName: "terraform apply delete access policy"
             inputs:
               command: apply
               environmentServiceName: $(service_connection)
