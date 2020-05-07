@@ -87,7 +87,9 @@ stages:
               workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform/delete_access_policy"
               scriptType: bash
               scriptLocation: inlineScript
+              addSpnToEnvironment: true
               inlineScript: |
+                # https://github.com/terraform-providers/terraform-provider-azurerm/issues/3814#issuecomment-512573065
                 export ARM_CLIENT_ID=$servicePrincipalId
                 export ARM_CLIENT_SECRET=$servicePrincipalKey
                 export ARM_SUBSCRIPTION_ID=$(az account show --query id | xargs)
