@@ -101,7 +101,7 @@ stages:
               command: plan
               backendType: local
               environmentServiceName: $(service_connection)
-              workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
+              workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform/delete_access_policy"
               commandOptions: "-var key_vault_id=$KEYVAULTID"
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
             displayName: "terraform apply delete access policy"
@@ -109,5 +109,5 @@ stages:
               command: apply
               backendType: local
               environmentServiceName: $(service_connection)
-              workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
+              workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform/delete_access_policy"
               commandOptions: "-var key_vault_id=$KEYVAULTID"
