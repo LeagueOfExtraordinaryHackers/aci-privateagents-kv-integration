@@ -88,6 +88,10 @@ stages:
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
+                export ARM_CLIENT_ID=$servicePrincipalId
+                export ARM_CLIENT_SECRET=$servicePrincipalKey
+                export ARM_SUBSCRIPTION_ID=$(az account show --query id | xargs)
+                export ARM_TENANT_ID=$(az account show --query tenantId | xargs)
                 terraform import -var key_vault_id=$KEYVAULTID azurerm_key_vault_access_policy.current $(ACCESSPOLICYID)
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
             displayName: "terraform plan"
