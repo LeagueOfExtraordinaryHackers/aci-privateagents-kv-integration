@@ -25,8 +25,4 @@ resource "azurerm_key_vault_access_policy" "remove_current" {
 
   certificate_permissions = [
   ]
-
-  depends_on = [
-    azurerm_key_vault_secret.sshkey,
-  ]
 } 
