@@ -89,34 +89,12 @@ resource "azurerm_key_vault_secret" "sshkey" {
   depends_on = [
     azurerm_key_vault_access_policy.current
   ]
+
+  triggers = {
+    value = "${length(var.module_depends_on)}"
+  }
+
 }
-
-#remove permissions to current SP
-
-resource "azurerm_key_vault_access_policy" "remove_current" {
-      count = var.destroy_accesspolicy ? 1 : 0
-
-  key_vault_id = azurerm_key_vault.keyvault.id
-
-  tenant_id = data.azurerm_client_config.current.tenant_id
-  object_id = data.azurerm_client_config.current.object_id
-
-  key_permissions = [
-  ]
-
-  secret_permissions = [
-  ]
-
-  storage_permissions = [
-  ]
-
-  certificate_permissions = [
-  ]
-
-  depends_on = [
-    azurerm_key_vault_secret.sshkey,
-  ]
-} 
 
 #add secret read access to the MI
 resource "azurerm_key_vault_access_policy" "mi" {

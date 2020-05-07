@@ -3,7 +3,12 @@ module "common" {
   resource_group_name = var.resource_group_name
   location            = var.location
   suffix              = var.suffix
-  destroy_accesspolicy = var.destroy_accesspolicy
+}
+
+module "remove_access_policy" {
+  source            = "./modules/remove_access_policy"
+  remove_depends_on = ["${module.common.sshkey}"]
+  keyvaultid        = module.common.keyvaultid
 }
 
 module "aci-devops-agents" {
