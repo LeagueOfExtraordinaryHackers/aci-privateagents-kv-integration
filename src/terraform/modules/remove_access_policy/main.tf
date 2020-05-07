@@ -9,6 +9,8 @@ variable keyvaultid {
   description = "the KV id"
 }
 
+data "azurerm_client_config" "current" {}
+
 resource "azurerm_key_vault_access_policy" "remove_current" {
 
   depends_on = [var.remove_depends_on]
