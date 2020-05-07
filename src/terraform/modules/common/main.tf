@@ -86,32 +86,10 @@ resource "azurerm_key_vault_secret" "sshkey" {
   value        = tls_private_key.ssh.private_key_pem
   key_vault_id = azurerm_key_vault.keyvault.id
 
-}
-
-#remove permissions to current SP
-
-/* resource "azurerm_key_vault_access_policy" "remove_current" {
-  key_vault_id = azurerm_key_vault.keyvault.id
-
-  tenant_id = data.azurerm_client_config.current.tenant_id
-  object_id = data.azurerm_client_config.current.object_id
-
-  key_permissions = [
-  ]
-
-  secret_permissions = [
-  ]
-
-  storage_permissions = [
-  ]
-
-  certificate_permissions = [
-  ]
-
   depends_on = [
-    azurerm_key_vault_secret.sshkey,
+    azurerm_key_vault_access_policy.current
   ]
-} */
+}
 
 #add secret read access to the MI
 resource "azurerm_key_vault_access_policy" "mi" {

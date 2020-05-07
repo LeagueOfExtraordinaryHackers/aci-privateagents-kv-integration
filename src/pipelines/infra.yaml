@@ -68,10 +68,3 @@ stages:
               environmentServiceName: $(service_connection)
               workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
               commandOptions: "-var resource_group_name=$(Build.DefinitionName) -var suffix=$(tag)"
-          - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
-            displayName: "terraform destroy"
-            inputs:
-              command: destroy
-              environmentServiceName: $(service_connection)
-              workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
-              commandOptions: "-var resource_group_name=$(Build.DefinitionName) -var suffix=$(tag) -target module.common.azurerm_key_vault_access_policy.current"
