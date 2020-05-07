@@ -23,6 +23,16 @@ variable subnet_name {
   description = "The name of the subnet of the vnet in which the containerized agents will be included."
 }
 
+variable image {
+  type        = string
+  description = "The image for the azure devops agents"
+}
+
+variable tag {
+  type        = string
+  description = "The image tag for the azure devops agents"
+}
+
 variable agents_count {
   type        = number
   description = "The number of DevOps agents to deploy."

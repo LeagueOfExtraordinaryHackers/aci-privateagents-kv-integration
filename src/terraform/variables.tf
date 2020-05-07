@@ -13,10 +13,14 @@ variable suffix {
   description = "a changing suffix for distinguishing runs"
 }
 
-variable destroy_accesspolicy {
+variable image {
+  type        = string
+  description = "The image for the azure devops agents"
+}
 
-  description = "wheter to destroy the default access policy"
-  default     = 0
+variable tag {
+  type        = string
+  description = "The image tag for the azure devops agents"
 }
 
 variable devops_org_name {

@@ -35,7 +35,7 @@ resource "azurerm_container_group" "aci-example" {
 
   container {
     name   = "azdoagents"
-    image  = "mcr.microsoft.com/azure-pipelines/vsts-agent"
+    image  = "${var.image}:${var.tag}"
     cpu    = "1"
     memory = "7"
     # this field seems to be mandatory (error happens if not there). See https://github.com/terraform-providers/terraform-provider-azurerm/issues/1697#issuecomment-608669422
