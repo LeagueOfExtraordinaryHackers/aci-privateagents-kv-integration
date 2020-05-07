@@ -21,6 +21,15 @@ resource "azurerm_subnet" "subnet" {
   service_endpoints = [
     "Microsoft.KeyVault"
   ]
+
+  delegation {
+    name = "acidelegation"
+
+    service_delegation {
+      name    = "Microsoft.ContainerInstance/containerGroups"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/join/action", "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action"]
+    }
+  }
 }
 
 #create a managed identity to access KV
