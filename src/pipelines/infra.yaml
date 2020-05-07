@@ -99,6 +99,7 @@ stages:
             displayName: "terraform plan"
             inputs:
               command: plan
+              backendType: local
               environmentServiceName: $(service_connection)
               workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
               commandOptions: "-var key_vault_id=$KEYVAULTID"
@@ -106,6 +107,7 @@ stages:
             displayName: "terraform apply delete access policy"
             inputs:
               command: apply
+              backendType: local
               environmentServiceName: $(service_connection)
               workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
               commandOptions: "-var key_vault_id=$KEYVAULTID"
