@@ -3,6 +3,7 @@ module "common" {
   resource_group_name = var.resource_group_name
   location            = var.location
   suffix              = var.suffix
+  destroy_accesspolicy = var.destroy_accesspolicy
 }
 
 module "aci-devops-agents" {

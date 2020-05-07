@@ -12,3 +12,9 @@ variable suffix {
   type        = string
   description = "a changing suffix for distinguishing runs"
 }
+
+variable destroy_accesspolicy {
+
+  description = "wheter to destroy the default access policy"
+  default     = 0
+}
