@@ -80,10 +80,15 @@ stages:
             inputs:
               command: init
               workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform/delete_access_policy"
-          - bash: |
-              terraform import -var key_vault_id=$KEYVAULTID azurerm_key_vault_access_policy.current $(ACCESSPOLICYID)
-            workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform/delete_access_policy"
+          - task: AzureCLI@2
             displayName: "Terraform import"
+            inputs:
+              azureSubscription: $(service_connection)
+              workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform/delete_access_policy"
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                terraform import -var key_vault_id=$KEYVAULTID azurerm_key_vault_access_policy.current $(ACCESSPOLICYID)
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
             displayName: "terraform plan"
             inputs:
