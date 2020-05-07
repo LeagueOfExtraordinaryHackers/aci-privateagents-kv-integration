@@ -81,7 +81,7 @@ stages:
               command: init
               workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform/delete_access_policy"
           - bash: |
-              terraform import -var key_vault_id=$KEYVAULTID azurerm_key_vault_access_policy.current $ACCESSPOLICYID
+              terraform import -var key_vault_id=$KEYVAULTID azurerm_key_vault_access_policy.current $(ACCESSPOLICYID)
             workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
             displayName: "Terraform import"
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
