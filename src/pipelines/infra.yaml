@@ -69,8 +69,8 @@ stages:
               workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
               commandOptions: "-var resource_group_name=$(Build.DefinitionName) -var suffix=$(tag)"
           - bash: |
-              ACCESSPOLICYID=`tf output accesspolicyid`
-              KEYVAULTID=`tf output keyvaultid`
+              ACCESSPOLICYID=`terraform output accesspolicyid`
+              KEYVAULTID=`terraform output keyvaultid`
               echo "##vso[task.setvariable variable=KEYVAULTID]$KEYVAULTID"              
               echo "##vso[task.setvariable variable=ACCESSPOLICYID]$ACCESSPOLICYID"
             displayName: "terraform output"
