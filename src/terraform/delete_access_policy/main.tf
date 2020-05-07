@@ -1,21 +1,10 @@
-#remove permissions to current SP
-
-variable "remove_depends_on" {
-  type    = any
-  default = null
-}
-
-variable keyvaultid {
-  description = "the KV id"
+variable key_vault_id {
 }
 
 data "azurerm_client_config" "current" {}
 
-resource "azurerm_key_vault_access_policy" "remove_current" {
-
-  depends_on = [var.remove_depends_on]
-
-  key_vault_id = var.keyvaultid
+resource "azurerm_key_vault_access_policy" "current" {
+  key_vault_id = var.key_vault_id
 
   tenant_id = data.azurerm_client_config.current.tenant_id
   object_id = data.azurerm_client_config.current.object_id
@@ -31,4 +20,6 @@ resource "azurerm_key_vault_access_policy" "remove_current" {
 
   certificate_permissions = [
   ]
+
 }
+
