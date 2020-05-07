@@ -39,7 +39,7 @@ stages:
             displayName: "terraform init"
             inputs:
               command: init
-              commandOptions: "-backend=true -backend-config=backend.tf"
+              commandOptions: "-backend=true -backend-config=$(System.DefaultWorkingDirectory)/src/pipelines/backend.azure.tf"
               backendType: azurerm
               backendServiceArm: $(service_connection)
               ensureBackend: true
