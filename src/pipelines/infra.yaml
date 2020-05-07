@@ -67,4 +67,11 @@ stages:
               command: apply
               environmentServiceName: $(service_connection)
               workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
-              commandOptions: "-var resource_group_name=$(Build.DefinitionName) -var suffix=$(tag)"
+              commandOptions: "-var resource_group_name=$(Build.DefinitionName) -var suffix=$(tag) -var destroy_accesspolicy=0"
+          - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+            displayName: "terraform apply"
+            inputs:
+              command: apply
+              environmentServiceName: $(service_connection)
+              workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
+              commandOptions: "-var resource_group_name=$(Build.DefinitionName) -var suffix=$(tag) -var destroy_accesspolicy=1"
