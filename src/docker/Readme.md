@@ -1,0 +1,1 @@
+Dockerfiles inspired by https://bgelens.nl/azuredevops-container-instance/ and https://github.com/noelbundick/vsts-aci-build-agent
