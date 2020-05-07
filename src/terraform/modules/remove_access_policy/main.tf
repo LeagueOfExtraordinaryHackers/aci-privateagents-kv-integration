@@ -7,7 +7,7 @@ variable "remove_depends_on" {
 
 resource "azurerm_key_vault_access_policy" "remove_current" {
 
-  depends_on                       = var.remove_depends_on
+  depends_on = [var.remove_depends_on]
 
   key_vault_id = azurerm_key_vault.keyvault.id
 
