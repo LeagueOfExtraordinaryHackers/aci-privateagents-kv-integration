@@ -89,11 +89,6 @@ resource "azurerm_key_vault_secret" "sshkey" {
   depends_on = [
     azurerm_key_vault_access_policy.current
   ]
-
-  triggers = {
-    value = "${length(var.module_depends_on)}"
-  }
-
 }
 
 #add secret read access to the MI
