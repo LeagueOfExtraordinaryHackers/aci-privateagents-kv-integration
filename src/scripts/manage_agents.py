@@ -58,8 +58,23 @@ class ManageAgents:
                           ", provisioning_state:" + str(agent.provisioning_state) +
                           ", status:" + str(agent.status))
 
+    def delete_my_pools(self, filter=None):
+        if filter is None:
+            exit("[ERROR] No filter set")
+        client = self.client_auth()
+        get_agent_pools_response = client.get_agent_pools()
+        for agent_pool in get_agent_pools_response:
+            if (agent_pool.owner.unique_name == filter):
+                print("")
+                print("=================================")
+                print("")
+                print("ID: " + str(agent_pool.id) +
+                      ", PoolName: " + agent_pool.name +
+                      ", Owner: " + agent_pool.owner.unique_name)
+                client.delete_agent_pool(agent_pool.id)
+
 
 #  Example Usage
 manager = ManageAgents()
 manager.get_my_pools("alvozza@microsoft.com")
-# manager.delete_agents_from_my_pool("alvozza@microsoft.com")
+# manager.delete_my_pools("alvozza@microsoft.com")
