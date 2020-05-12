@@ -14,7 +14,7 @@ output "keyvault_name" {
   value = azurerm_key_vault.keyvault.name
 }
 
-output "accesspolicyid" {
+output "accesspolicy_id" {
   value = azurerm_key_vault_access_policy.current.id
 }
 
@@ -26,4 +26,6 @@ output "subnet_name" {
   value = azurerm_subnet.subnet.name
 }
 
-
+output "azurerm_storage_account_identity_principal_id" {
+  value = azurerm_storage_account.kvmanagedstor.identity.0.principal_id
+}

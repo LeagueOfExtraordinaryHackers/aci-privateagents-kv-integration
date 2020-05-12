@@ -1,9 +1,22 @@
 module "common" {
-  source              = "./modules/common"
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  suffix              = var.suffix
+  source               = "./modules/common"
+  resource_group_name  = var.resource_group_name
+  location             = var.location
+  suffix               = var.suffix
   storage_account_name = var.storage_account_name
+}
+
+module "storagekv" {
+  source               = "./modules/storage-kv"
+  resource_group_name  = var.resource_group_name
+  location             = var.location
+  suffix               = var.suffix
+  vnet_name            = module.common.vnet_name
+  subnet_name          = module.common.subnet_name
+  keyvault_name        = module.common.keyvault_name
+  keyvault_id          = module.common.keyvault_id
+  storage_account_name = var.storage_account_name
+  azurerm_storage_account_identity_principal_id = module.common.azurerm_storage_account_identity_principal_id
 }
 
 module "aci-devops-agents" {

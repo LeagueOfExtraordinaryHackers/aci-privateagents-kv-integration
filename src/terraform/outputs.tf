@@ -1,7 +1,7 @@
-output accesspolicyid {
-  value = module.common.accesspolicyid
+output accesspolicy_id {
+  value = module.common.accesspolicy_id
 }
 
-output keyvaultid {
-  value = module.common.keyvaultid
+output keyvault_id {
+  value = module.common.keyvault_id
 }

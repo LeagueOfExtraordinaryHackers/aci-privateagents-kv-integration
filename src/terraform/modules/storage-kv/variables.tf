@@ -23,6 +23,18 @@ variable subnet_name {
   description = "The name of the subnet of the vnet in which the containerized agents will be included."
 }
 
-variable "keyvaultname" {
+variable "keyvault_name" {
+  type = string
+}
+
+variable "keyvault_id" {
+  type = string
+}
+
+variable "storage_account_name" {
+  type = string
+}
+
+variable "azurerm_storage_account_identity_principal_id" {
   type = string
 }

@@ -11,7 +11,7 @@ data "azurerm_subnet" "subnet" {
 }
 
 data "azurerm_key_vault" "kv" {
-  name                = var.keyvaultname
+  name                = var.keyvault_name
   resource_group_name = var.resource_group_name
 }
 
@@ -36,14 +36,14 @@ resource "azurerm_key_vault_key" "storkey" {
 resource "azurerm_key_vault_access_policy" "storage" {
   key_vault_id = data.azurerm_key_vault.kv.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = data.azurerm_storage_account.storage.identity.0.principal_id
+  object_id    = var.azurerm_storage_account_identity_principal_id
 
   key_permissions    = ["get", "create", "list", "restore", "recover", "unwrapkey", "wrapkey", "purge", "encrypt", "decrypt", "sign", "verify"]
   secret_permissions = ["get"]
 }
 
 resource "azurerm_key_vault_access_policy" "client" {
-  key_vault_id = azurerm_key_vault.example.id
+  key_vault_id = var.keyvault_id
   tenant_id    = data.azurerm_client_config.current.tenant_id
   object_id    = data.azurerm_client_config.current.object_id
 
@@ -52,9 +52,9 @@ resource "azurerm_key_vault_access_policy" "client" {
 }
 
 
-resource "azurerm_storage_account_customer_managed_key" "example" {
-  storage_account_id = azurerm_storage_account.example.id
-  key_vault_id       = azurerm_key_vault.example.id
-  key_name           = azurerm_key_vault_key.example.name
-  key_version        = azurerm_key_vault_key.example.version
+resource "azurerm_storage_account_customer_managed_key" "cmk" {
+  storage_account_id = data.azurerm_storage_account.storage.id
+  key_vault_id       = var.keyvault_id
+  key_name           = var.keyvault_name
+  key_version        = azurerm_key_vault_key.storkey.version
 }
