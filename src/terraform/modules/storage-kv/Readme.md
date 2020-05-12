@@ -14,4 +14,6 @@ module "storage-kv" {
 
 Refs:
 
+https://www.terraform.io/docs/providers/azurerm/r/storage_account_customer_managed_key.html
 https://github.com/terraform-providers/terraform-provider-azurerm/issues/6111
+https://docs.microsoft.com/en-us/azure/key-vault/secrets/overview-storage-keys
