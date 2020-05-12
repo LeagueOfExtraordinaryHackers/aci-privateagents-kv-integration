@@ -13,6 +13,12 @@ variable suffix {
   description = "a changing suffix for distinguishing runs"
 }
 
+variable storage_account_name {
+  type        = string
+  description = "storage account name"
+}
+
+
 variable image {
   type        = string
   description = "The image for the azure devops agents"

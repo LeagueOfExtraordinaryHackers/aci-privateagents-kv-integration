@@ -12,3 +12,10 @@ variable suffix {
   type        = string
   description = "a changing suffix for distinguishing runs"
 }
+
+variable storage_account_name {
+  type = string
+  #adding default for now
+  default     = "kvmanagedstor"
+  description = "storage account name"
+}

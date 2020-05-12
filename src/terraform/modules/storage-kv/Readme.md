@@ -1,3 +1,5 @@
+Terraform module to add a KV-managed access key to an existing storage acccount.
+
 Call as:
 
 ```

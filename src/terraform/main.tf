@@ -3,6 +3,7 @@ module "common" {
   resource_group_name = var.resource_group_name
   location            = var.location
   suffix              = var.suffix
+  storage_account_name = var.storage_account_name
 }
 
 module "aci-devops-agents" {
