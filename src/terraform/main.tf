@@ -16,6 +16,6 @@ module "aci-devops-agents" {
   devops_org_name              = var.devops_org_name
   devops_pool_name             = var.devops_pool_name
   devops_personal_access_token = var.devops_personal_access_token
-  image                        = var.image
-  tag                          = var.tag
+  devops_agent_docker_image    = var.devops_agent_docker_image
+  devops_agent_docker_tag      = var.devops_agent_docker_tag
 }

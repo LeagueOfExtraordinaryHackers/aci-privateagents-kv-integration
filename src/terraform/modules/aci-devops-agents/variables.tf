@@ -23,16 +23,6 @@ variable subnet_name {
   description = "The name of the subnet of the vnet in which the containerized agents will be included."
 }
 
-variable image {
-  type        = string
-  description = "The image for the azure devops agents"
-}
-
-variable tag {
-  type        = string
-  description = "The image tag for the azure devops agents"
-}
-
 variable agents_count {
   type        = number
   description = "The number of DevOps agents to deploy."
@@ -51,4 +41,14 @@ variable devops_pool_name {
 variable devops_personal_access_token {
   type = string
   description = "The personal access token to use to connect to Azure DevOps."
+}
+
+variable devops_agent_docker_image {
+  type        = string
+  description = "The image for the azure devops agents"
+}
+
+variable devops_agent_docker_tag {
+  type        = string
+  description = "The image tag for the azure devops agents"
 }

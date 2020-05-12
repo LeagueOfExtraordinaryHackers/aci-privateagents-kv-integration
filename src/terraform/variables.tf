@@ -13,12 +13,12 @@ variable suffix {
   description = "a changing suffix for distinguishing runs"
 }
 
-variable image {
+variable devops_agent_docker_image {
   type        = string
   description = "The image for the azure devops agents"
 }
 
-variable tag {
+variable devops_agent_docker_tag {
   type        = string
   description = "The image tag for the azure devops agents"
 }
