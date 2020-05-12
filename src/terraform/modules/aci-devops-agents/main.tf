@@ -43,11 +43,13 @@ resource "azurerm_container_group" "aci-example" {
       port     = 9998
       protocol = "UDP"
     }
+
     environment_variables = {
-      VSTS_ACCOUNT = var.devops_org_name
-      VSTS_POOL = var.devops_pool_name
-      VSTS_TOKEN = var.devops_personal_access_token
-      VSTS_AGENT= "aci-devops-agents-${var.suffix}-${count.index}"
+      VSTS_AGENT_INPUT_URL   = "https://dev.azure.com/${var.devops_org_name}"
+      VSTS_AGENT_INPUT_POOL  = var.devops_pool_name
+      VSTS_AGENT_INPUT_AUTH  = "pat"
+      VSTS_AGENT_INPUT_TOKEN = var.devops_personal_access_token
+      VSTS_AGENT_INPUT_AGENT = "aci-devops-agents-${var.suffix}-${count.index}"
     }
   }
 }

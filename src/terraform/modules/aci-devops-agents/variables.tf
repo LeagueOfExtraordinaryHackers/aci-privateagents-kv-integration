@@ -29,17 +29,17 @@ variable agents_count {
 }
 
 variable devops_org_name {
-  type = string
+  type        = string
   description = "The name of the Azure DevOps organization."
 }
 
 variable devops_pool_name {
-  type = string
+  type        = string
   description = "The name of the Azure DevOps agent pools to use."
 }
 
 variable devops_personal_access_token {
-  type = string
+  type        = string
   description = "The personal access token to use to connect to Azure DevOps."
 }
 
