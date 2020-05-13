@@ -31,4 +31,5 @@ RUN  unzip terraform_${tfversion}_linux_amd64.zip \
 
 USER vsts
 
-ENTRYPOINT [ "/bin/bash", "-c", "./config.sh --unattended --replace && ./run.sh" ]
+# added 30 seconds sleep time to let the time to the ACI to get access to the Internet, otherwise, got some timeout on the agent registration...
+ENTRYPOINT [ "/bin/bash", "-c", "sleep 30 && ./config.sh --unattended --replace && ./run.sh" ]
