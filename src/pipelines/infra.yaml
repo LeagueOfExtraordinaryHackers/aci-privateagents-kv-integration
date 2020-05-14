@@ -111,3 +111,5 @@ stages:
               environmentServiceName: $(service_connection)
               workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform/delete_access_policy"
               commandOptions: "-var key_vault_id=$(KEYVAULTID)"
+              
+              
