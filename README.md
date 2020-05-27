@@ -4,7 +4,7 @@
 
 This repository shows how to build a scalable pool of Azure DevOps ACI-based agents that have private access to a secured Keyvault to retrieve secrets (in this case, an SSH private key) to operate over air-gapped resources in Azure. 
 
-Particular attention has been placed on security: the example secrets generated and upload in the pipeline is further made unaccessible by the Azure DevOps Service Connection by locking down the Keyvault access policy.
+Access to generated secrets and downloading them in a pipeline is not possible for the Azure DevOps Service Connection as it's blocked by the KeyVault Access Policy.
 
 
 ### Implementation 
@@ -33,11 +33,11 @@ The repository consist of two modules (in `src/terraform/modules`):
 We added (under `src/scripts`):
 
 - A script to populate a Variable group from a set of key/values (TODO: use a YAML formatted file as input): `create_vg.sh`
-- A python module to delete agents from a pool. As the [official Azure DevOps CLI extension for Azure CLI](https://github.com/Azure/azure-devops-cli-extension) does not suppoer yet ([issue](https://github.com/Azure/azure-devops-cli-extension/issues/955)) we thought it would be handy to have a module to implemnt such functionality in a script (TODO: implement the module in a cli command)
+- A python module to delete agents from a pool. As the [official Azure DevOps CLI extension for Azure CLI](https://github.com/Azure/azure-devops-cli-extension) does not support it yet ([issue](https://github.com/Azure/azure-devops-cli-extension/issues/955)) we thought it would be handy to have a module to implemnt such functionality in a script (TODO: implement the module in a cli command)
 
 ### Scenario:
 
 Deploy an app to a private vnet, using secrets stored in a private KV, using ACI as AzDo agents. No secrets shall be exposed to the outside world.
 Implementation:
 
-Please see a list of [Contributors](CONTRIBUTORS.md) and the [security](security.md) document associated with this repo. This content is available under the [MIT license](LICENSE).
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments. Please see a list of [Contributors](CONTRIBUTORS.md) to this project. This content is available under the [MIT license](LICENSE).suppor
