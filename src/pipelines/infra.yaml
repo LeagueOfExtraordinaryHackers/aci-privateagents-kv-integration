@@ -15,6 +15,7 @@ variables:
   - name: tag
     value: "$(Build.BuildId)"
   - group: TFBackend
+  - group: ACIDevOps.Secrets
   - name: skipComponentGovernanceDetection
     value: true
   - name: vmImageName
@@ -39,7 +40,7 @@ stages:
             displayName: "terraform init"
             inputs:
               command: init
-              commandOptions: "-backend=true -backend-config=backend.tf"
+              commandOptions: "-backend=true -backend-config=$(System.DefaultWorkingDirectory)/src/pipelines/backend.azure.tf"
               backendType: azurerm
               backendServiceArm: $(service_connection)
               ensureBackend: true
@@ -60,14 +61,14 @@ stages:
               command: plan
               environmentServiceName: $(service_connection)
               workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
-              commandOptions: "-var resource_group_name=$(Build.DefinitionName) -var suffix=$(tag)"
+              commandOptions: "-var resource_group_name=$(Build.DefinitionName) -var suffix=$(tag) -var devops_org_name=$(devopsOrganization) -var devops_personal_access_token=$(devopsPersonalAccessToken) -var devops_pool_name=$(devopsPoolName) -var devops_agent_docker_image=$(devopsAgentDockerImage) -var devops_agent_docker_tag=$(devopsAgentDockerTag)"
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
             displayName: "terraform apply"
             inputs:
               command: apply
               environmentServiceName: $(service_connection)
               workingDirectory: "$(System.DefaultWorkingDirectory)/src/terraform"
-              commandOptions: "-var resource_group_name=$(Build.DefinitionName) -var suffix=$(tag)"
+              commandOptions: "-var resource_group_name=$(Build.DefinitionName) -var suffix=$(tag) -var devops_org_name=$(devopsOrganization) -var devops_personal_access_token=$(devopsPersonalAccessToken) -var devops_pool_name=$(devopsPoolName) -var devops_agent_docker_image=$(devopsAgentDockerImage) -var devops_agent_docker_tag=$(devopsAgentDockerTag)"
           - bash: |
               ACCESSPOLICYID=`terraform output accesspolicyid`
               KEYVAULTID=`terraform output keyvaultid`
