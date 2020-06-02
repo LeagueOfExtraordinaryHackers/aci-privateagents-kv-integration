@@ -4,6 +4,8 @@
 
 Deploy an app to a private vnet, using secrets stored in a private KV, using ACI as AzDo agents. No secrets shall be exposed to the outside world.
 
+For more information on the rationale behind this, check the [scenario document](scenario.md).
+
 Access to generated secrets and downloading them in a pipeline is not possible for the Azure DevOps Service Connection as it's blocked by the KeyVault Access Policy.
 
 
